@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <!--        stock_picking_tree-->
+        <record id="view_stock_picking_tree" model="ir.ui.view">
+            <field name="name">stock.picking.tree</field>
+            <field name="model">stock.picking</field>
+            <field name="arch" type="xml">
+                <tree string="单据">
+                    <field name="name"/>
+                    <field name="state"/>
+                    <field name="picking_type_id"/>
+                    <field name="sale_order_id"/>
+                    <field name="contract_no"/>
+                    <field name="done_date"/>
+                    <field name="location_id"/>
+                    <field name="location_dest_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--        stock_picking_form-->
+        <record id="view_stock_picking_form" model="ir.ui.view">
+            <field name="name">stock.picking.form</field>
+            <field name="model">stock.picking</field>
+            <field name="arch" type="xml">
+                <form string="单据">
+                    <header>
+                        <!--执行调拨-->
+<!--                        <button name="action_confirm" string="验证" type="object" class="btn-primary"/>-->
+                        <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,done"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title" style="">
+                            <h1>
+                                <div class="d-flex">
+                                    <field class="text-break
+                                    " name="name" options="{'line_breaks': False}" widget="text" readonly="True"
+                                           force_save="1"/>
+                                </div>
+                            </h1>
+                        </div>
+                        <group col="4">
+                            <group>
+                                <field name="picking_type_id" readonly="True" force_save="1"/>
+                                <field name="done_date" readonly="True" force_save="1"/>
+                                <field name="note"/>
+                            </group>
+                            <group>
+                                <field name="sale_origin" readonly="True" force_save="1"/>
+                                <field name="origin" readonly="True" force_save="1"/>
+                                <field name="contract_no" readonly="True" force_save="1"/>
+                            </group>
+                            <group>
+                                <field name="supplier_name" readonly="True" force_save="1"/>
+                                <field name="corporation_name" readonly="True" force_save="1"/>
+                            </group>
+                            <group>
+                                <field name="location_id" readonly="True" force_save="1"/>
+                                <field name="location_dest_id" readonly="True" force_save="1"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="产品">
+                                <field name="move_line_ids" readonly="1">
+                                    <tree string="产品" editable="1">
+                                        <field name="category_id"/>
+                                        <field name="barcode"/>
+                                        <field name="model"/>
+                                        <field name="product_id"/>
+                                        <!--                                        <field name="product_uom_qty"/>-->
+                                        <field name="done_qty"/>
+                                        <field name="product_uom_id"/>
+                                        <field name="location_id"/>
+                                        <field name="location_dest_id"/>
+                                        <field name="note"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!--        stock_picking_action-->
+        <record id="action_stock_picking" model="ir.actions.act_window">
+            <field name="name">单据</field>
+            <field name="res_model">stock.picking</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{'search_default_group_by_partner': 1}</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    点击创建新的单据
+                </p>
+            </field>
+        </record>
+
+
+        <!--        单据-->
+        <menuitem id="menu_stock_picking"
+                  name="单据" sequence="1"
+                  parent="menu_stock_picking_list"
+                  action="action_stock_picking"
+                  groups="base.group_user"/>
+    </data>
+</odoo>

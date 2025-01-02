@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+<odoo>
+    <data>
+        <record id="group_create_product" model="res.groups">
+            <field name="name">产品创建权限</field>
+            <field name="category_id" ref="base.module_category_hidden"/>
+        </record>
+        <record id="manage_template_access" model="res.groups">
+            <field name="name">Manage template access</field>
+            <field name="category_id" ref="base.module_category_hidden"/>
+        </record>
+    </data>
+</odoo>
+

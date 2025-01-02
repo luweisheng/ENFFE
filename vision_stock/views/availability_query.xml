@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_vision_availability_query_form" model="ir.ui.view">
+            <field name="name">stock.quantity.tree</field>
+            <field name="model">vision.availability.query</field>
+            <field name="arch" type="xml">
+                <form string="现有量查询表" create="0">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="quantity"/>
+                                <field name="availability"/>
+                            </group>
+                            <group>
+                                <field name="purchase_in_transit"/>
+                                <field name="sale_in_transit"/>
+                                <field name="production_in_transit"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="在手量">
+                                <field name="quantity_line_ids" readonly="1">
+                                    <tree string="在手量">
+                                        <field name="location_id"/>
+                                        <field name="quantity" sum="quantity"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="采购在途">
+                                <field name="purchase_in_transit_line_ids" readonly="1">
+                                    <tree string="采购在途">
+                                        <field name="purchase_id"/>
+                                        <field name="quantity" sum="quantity"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="销售在途">
+                                <field name="sale_in_transit_line_ids" readonly="1">
+                                    <tree string="销售在途">
+                                        <field name="sale_id"/>
+                                        <field name="quantity" sum="quantity"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="生产在途">
+                                <field name="production_in_transit_line_ids" readonly="1">
+                                    <tree string="生产在途">
+                                        <field name="production_id"/>
+                                        <field name="quantity" sum="quantity"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <footer/>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

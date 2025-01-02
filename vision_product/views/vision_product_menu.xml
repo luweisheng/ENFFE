@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!--        工程技术menu-->
+        <menuitem id="menu_vision_engineering_technology"
+                  name="技术"
+                  sequence="0"
+                  groups="base.group_user"
+                  web_icon="vision_product,static/description/icon.png"/>
+
+        <menuitem id="menu_vision_product_config"
+                  name="配置"
+                  parent="menu_vision_engineering_technology"
+                  sequence="50"/>
+    </data>
+</odoo>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+
+        <!--        供应商tree视图-->
+        <record id="view_supplier_order_tree" model="ir.ui.view">
+            <field name="name">res.partner.tree</field>
+            <field name="model">res.supplier</field>
+            <field name="arch" type="xml">
+                <tree string="供应商">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="address"/>
+                    <field name="fax"/>
+                    <field name="contact"/>
+                    <field name="note"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--        供应商form视图-->
+        <record id="view_supplier_order_form" model="ir.ui.view">
+            <field name="name">res.partner.form</field>
+            <field name="model">res.supplier</field>
+            <field name="arch" type="xml">
+                <form string="供应商">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="code"/>
+                                <field name="address"/>
+                                <field name="note"/>
+                            </group>
+                            <group>
+                                <field name="fax"/>
+                                <field name="contact"/>
+                                <label for="tax_included"/>
+                                <div class="o_row">
+                                    <field name="tax_included"/>
+                                    税率<field name="tax_rate"/>
+                                </div>
+                                <field name="category_ids" widget="many2many_tags" options="{'no_create': True, 'no_open': True, 'no_create_edit': True}"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!--        供应商action-->
+        <record id="action_supplier_order" model="ir.actions.act_window">
+            <field name="name">供应商</field>
+            <field name="res_model">res.supplier</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_no
+                content">供应商
+                </p>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

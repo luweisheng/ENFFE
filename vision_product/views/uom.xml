@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="uom_tree" model="ir.ui.view">
+            <field name="name">uom.tree</field>
+            <field name="model">product.uom</field>
+            <field name="arch" type="xml">
+                <tree string="单位">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="uom_form" model="ir.ui.view">
+            <field name="name">uom.form</field>
+            <field name="model">product.uom</field>
+            <field name="arch" type="xml">
+                <form string="单位">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+<!--        uom_action-->
+        <record id="uom_action" model="ir.actions.act_window">
+            <field name="name">单位</field>
+            <field name="res_model">product.uom</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="uom_tree"/>
+        </record>
+
+        <menuitem id="menu_vision_uom"
+                  name="单位"
+                  action="uom_action"
+                  parent="menu_vision_product_config"
+                  sequence="1"/>
+
+    </data>
+</odoo>

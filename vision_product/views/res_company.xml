@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_company_form202412311408" model="ir.ui.view">
+            <field name="name">公司权限表</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position='inside'>
+                    <page string="技术资料">
+                        <group name="company_product_group">
+                            <group name="company_product_group1">
+                                <field name="product_edit_ids" widget="many2many_tags"
+                                options="{'no_create': True, 'no_open': True, 'no_create_edit': True}"/>
+                            </group>
+                            <group name="company_product_group2">
+
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

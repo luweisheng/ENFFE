@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <!--        价格表tree视图-->
+        <record id="view_product_price_tree" model="ir.ui.view">
+            <field name="name">product.price.tree</field>
+            <field name="model">product.price</field>
+            <field name="arch" type="xml">
+                <tree string="价格表">
+                    <field name="name"/>
+                    <field name="category_id"/>
+                    <field name="barcode"/>
+                    <field name="model"/>
+                    <field name="drawing_number"/>
+                    <field name="product_id"/>
+                    <field name="price"/>
+                    <field name="tax_included"/>
+                    <field name="note"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--        价格表form视图-->
+        <record id="view_product_price_form" model="ir.ui.view">
+            <field name="name">product.price.form</field>
+            <field name="model">product.price</field>
+            <field name="arch" type="xml">
+                <form string="价格表">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="product_id"/>
+                                <field name="category_id"/>
+                                <field name="barcode"/>
+                                <field name="model"/>
+                                <field name="drawing_number"/>
+                            </group>
+                            <group>
+                                <field name="name"/>
+                                <field name="min_qty"/>
+                                <field name="price"/>
+                                <field name="tax_included"/>
+                                <field name="note"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+<!--        搜索视图：型号、图号、条码、产品-->
+        <record id="view_product_price_search" model="ir.ui.view">
+            <field name="name">product.price.search</field>
+            <field name="model">product.price</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="product_id"/>
+                    <field name="name"/>
+                    <field name="category_id"/>
+                    <field name="barcode"/>
+                    <field name="model"/>
+                    <field name="drawing_number"/>
+                </search>
+            </field>
+        </record>
+
+        <!--        价格表action-->
+        <record id="action_product_price" model="ir.actions.act_window">
+            <field name="name">价格表</field>
+            <field name="res_model">product.price</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_product_price_search"/>
+            <field name="help" type="html">
+                <p class="oe_view_no
+                content">价格表
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

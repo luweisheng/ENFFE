@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="packing_type_tree" model="ir.ui.view">
+            <field name="name">packing.type.tree</field>
+            <field name="model">packing.type</field>
+            <field name="arch" type="xml">
+                <tree string="BOM">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="length"/>
+                    <field name="width"/>
+                    <field name="height"/>
+                    <field name="gross_weight"/>
+                    <field name="net_weight"/>
+                    <field name="packing_qty"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--        bom form视图-->
+        <record id="packing_type_form" model="ir.ui.view">
+            <field name="name">packing.type.form</field>
+            <field name="model">packing.type</field>
+            <field name="arch" type="xml">
+                <form string="BOM">
+                    <group col="3">
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="note"/>
+                        </group>
+                        <group>
+                            <field name="length"/>
+                            <field name="width"/>
+                            <field name="height"/>
+                        </group>
+                        <group>
+                            <field name="gross_weight"/>
+                            <field name="net_weight"/>
+                            <field name="packing_qty"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="packing_type_sequence" model="ir.sequence">
+            <field name="name">包装类型编号</field>
+            <field name="code">packing.type</field>
+            <field name="prefix">PT</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="packing_type_action" model="ir.actions.act_window">
+            <field name="name">包装</field>
+            <field name="res_model">packing.type</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="packing_type_bom"
+                  name="包装"
+                  action="packing_type_action"
+                  parent="menu_vision_engineering_technology"
+                  sequence="4"/>
+    </data>
+</odoo>

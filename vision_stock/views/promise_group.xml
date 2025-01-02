@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="vision_company_group_form_view202411201640" model="ir.ui.view">
+            <field name="name">公司权限表</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position='inside'>
+                    <page string="仓库配置">
+                        <group col="4">
+                            <group>
+                                <field name="purchase_in_stock_id"/>
+                                <field name="purchase_return_id"/>
+                                <field name="outsource_out_stock_id"/>
+                                <field name="outsource_return_id"/>
+                                <field name="outsource_in_stock_id"/>
+                                <field name="outsource_return_stock_id"/>
+                            </group>
+                            <group>
+                                <field name="sale_out_stock_id"/>
+                                <field name="sale_return_id"/>
+                            </group>
+                            <group>
+                                <field name="production_out_stock_id"/>
+                                <field name="production_return_id"/>
+                                <field name="finished_in_stock_id"/>
+                                <field name="finished_return_id"/>
+                            </group>
+                            <group>
+                                <field name="other_in_stock_id"/>
+                                <field name="other_out_stock_id"/>
+                                <field name="internal_transfer_id"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

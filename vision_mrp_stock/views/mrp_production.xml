@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_vision_mrp_order_form202411231354" model="ir.ui.view">
+            <field name="name">mrp.order.form</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="vision_mrp.view_vision_mrp_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/header/button[@name='action_underway']" position="after">
+                    <!--生产发布库存-->
+                    <button name="open_release_inventory_action"
+                            string="生产发布库存"
+                            type="object"
+                            invisible="state != 'underway'"
+                            class="btn-primary"/>
+                </xpath>
+
+                <xpath expr="//form/sheet/group/group[4]" position="inside">
+                    <field name="module_consume_location_id"/>
+                    <field name="finished_location_id"/>
+                    <field name="virtual_production_location_id"/>
+                    <field name="note"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

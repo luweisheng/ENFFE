@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="seq_mrp_production" model="ir.sequence">
+            <field name="name">Mrp production</field>
+            <field name="code">mrp.production</field>
+            <field name="prefix">MO</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="view_company_form202412311408" model="ir.ui.view">
+            <field name="name">公司权限表</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position='inside'>
+                    <page string="生产配置">
+                        <group name="company_mrp_group">
+                            <group name="company_mrp_group1">
+                                <field name="production_lead_time"/>
+                            </group>
+                            <group name="company_mrp_group2">
+
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <!--        制造menu-->
+        <menuitem id="menu_mrp"
+                  name="制造"
+                  sequence="3"
+                  groups="base.group_user"
+                  web_icon="vision_mrp,static/description/icon.png"/>
+
+        <!--        制造订单tree视图-->
+        <record id="view_vision_mrp_order_tree" model="ir.ui.view">
+            <field name="name">mrp.order.tree</field>
+            <field name="model">mrp.production</field>
+            <field name="arch" type="xml">
+                <tree string="订单">
+                    <field name="name"/>
+                    <field name="category_id"/>
+                    <field name="barcode"/>
+                    <field name="model"/>
+                    <field name="drawing_number"/>
+                    <field name="product_id"/>
+                    <field name="state"/>
+                    <field name="sale_order_id"/>
+                    <field name="contract_no"/>
+                    <field name="product_qty"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--        制造订单form视图-->
+        <record id="view_vision_mrp_order_form" model="ir.ui.view">
+            <field name="name">mrp.order.form</field>
+            <field name="model">mrp.production</field>
+            <field name="arch" type="xml">
+                <form string="制造">
+                    <header>
+                        <button name="action_underway"
+                                string="开始生产"
+                                type="object"
+                                invisible="state != 'confirmed'"
+                                class="btn-primary"/>
+
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title" style="">
+                            <h1>
+                                <div class="d-flex">
+                                    <field class="text-break" name="name" options="{'line_breaks': False}" widget="text"
+                                           readonly="True" force_save="1"/>
+                                </div>
+                            </h1>
+                        </div>
+                        <group col="4">
+                            <group>
+                                <field name="product_id"
+                                       options="{'no_create': True, 'no_open': True, 'no_create_edit': True}"/>
+                                <field name="category_id"/>
+                                <field name="barcode"/>
+                                <field name="model"/>
+                                <field name="drawing_number"/>
+                            </group>
+                            <group>
+                                <field name="bom_id"
+                                       options="{'no_create': True, 'no_open': True, 'no_create_edit': True}"/>
+                                <label for="order_qty" string="订单数"/>
+                                <div class="o_row">
+                                    <field name="order_qty" readonly="1"/>
+                                    生产数:
+                                    <field name="product_qty" readonly="1"/>
+                                </div>
+                                <label for="done_qty" string="已生产"/>
+                                <div class="o_row">
+                                    <field name="done_qty" readonly="1"/>
+                                    入库:
+                                    <field name="in_qty" readonly="1"/>
+                                    剩余入库:
+                                    <field name="surplus_qty" readonly="1"/>
+                                </div>
+                                <field name="set_qty"/>
+                            </group>
+                            <group>
+                                <field name="sale_order_id"/>
+                                <field name="contract_no"/>
+                                <label for='plan_start_date' string="计划"/>
+                                <div class="o_row">
+                                    <field name="plan_start_date"/>
+                                    ->
+                                    <field name="plan_end_date"/>
+                                </div>
+                                <label for='start_date' string="实际"/>
+                                <div class="o_row">
+                                    <field name="start_date"/>
+                                    ->
+                                    <field name="end_date"/>
+                                </div>
+                            </group>
+                            <group>
+                                <label for='is_outsource' string="委外："/>
+                                <div class="o_row">
+                                    <field name="is_outsource" widget="boolean_toggle"/>
+                                    委外商：
+                                    <field name="supplier_id" required="is_outsource == True"
+                                           options="{'no_create': True, 'no_open': True, 'no_create_edit': True}"/>
+                                </div>
+                                <field name="factory_id"
+                                       options="{'no_create': True, 'no_open': True, 'no_create_edit': True}"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="生产明细">
+                                <field name="production_line">
+                                    <tree string="生产明细" editable="bottom" create="0" delete="0">
+                                        <field name="category_id"/>
+                                        <field name="barcode"/>
+                                        <field name="model"/>
+                                        <field name="drawing_number"/>
+                                        <field name="supplier_id"/>
+                                        <field name="product_id"/>
+                                        <field name="product_qty"/>
+                                        <field name="picking_qty"/>
+                                        <field name="consume_qty"/>
+                                        <field name="product_uom_id"/>
+                                        <field name="unit_factor"/>
+                                        <field name="bom_note"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="完工明细">
+                                <field name="done_line" readonly="1">
+                                    <tree string="生产明细" editable="bottom">
+                                        <field name="category_id"/>
+                                        <field name="barcode"/>
+                                        <field name="model"/>
+                                        <field name="drawing_number"/>
+                                        <field name="product_id"/>
+                                        <field name="product_qty"/>
+                                        <field name="product_uom_id"/>
+                                        <field name="done_date"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+
+        <!--        制造订单action-->
+        <record id="action_vision_mrp_order" model="ir.actions.act_window">
+            <field name="name">订单</field>
+            <field name="res_model">mrp.production</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+        </record>
+
+        <!--        制造订单menu-->
+        <menuitem id="menu_vision_mrp_order"
+                  name="生产"
+                  parent="menu_mrp"
+                  action="action_vision_mrp_order"
+                  sequence="1"
+                  groups="base.group_user"/>
+
+    </data>
+</odoo>

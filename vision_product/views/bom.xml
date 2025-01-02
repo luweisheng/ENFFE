@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="seq_mrp_bom" model="ir.sequence">
+            <field name="name">BOM编号</field>
+            <field name="code">mrp.bom</field>
+            <field name="prefix">BOM</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!--        bom tree视图-->
+        <record id="bom_tree" model="ir.ui.view">
+            <field name="name">bom.tree</field>
+            <field name="model">mrp.bom</field>
+            <field name="arch" type="xml">
+                <tree string="BOM">
+                    <field name="category_id"/>
+                    <field name="barcode"/>
+                    <field name="model"/>
+                    <field name="drawing_number"/>
+                    <field name="bom_type"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--        bom form视图-->
+        <record id="bom_form" model="ir.ui.view">
+            <field name="name">bom.form</field>
+            <field name="model">mrp.bom</field>
+            <field name="arch" type="xml">
+                <form string="BOM">
+                    <header>
+                        <!--批量维护价格表-->
+                        <button name="bulk_maintenance_price_list"
+                                string="维护价格表"
+                                class="oe_highlight"
+                                type="object"/>
+                        <!--                        <button name="action_next" string="下一步" type="object" class="oe_highlight" invisible="state == 'done'"/>-->
+                        <!--                        提交提交采购核价-->
+                        <button name="action_submit_purchase"
+                                string="提交采购核价"
+                                type="object"
+                                class="oe_highlight"
+                                invisible="state != 'draft'"
+                                groups="vision_product.group_submit_purchase"/>
+                        
+                        <!--                        驳回草稿-->
+                        <button name="action_reject_purchase"
+                                string="驳回"
+                                type="object"
+                                class="oe_highlight btn-danger"
+                                invisible="state != 'purchase'"
+                                groups="vision_product.group_reject_purchase"
+                        />
+                        <!--                        提交业务确认-->
+                        <button name="action_submit_sale"
+                                string="提交业务确认"
+                                type="object"
+                                class="oe_highlight"
+                                invisible="state != 'purchase'"
+                                groups="vision_product.group_submit_sale"/>
+                                
+<!--                        驳回采购-->
+                        <button name="action_reject_sale"
+                                string="驳回"
+                                type="object"
+                                class="oe_highlight btn-danger"
+                                invisible="state != 'sale'"
+                                groups="vision_product.group_reject_sale"/>
+
+
+                        <!--                        提交技术复核-->
+                        <button name="action_submit_technical_review"
+                                string="提交技术复核"
+                                type="object"
+                                class="oe_highlight"
+                                invisible="state != 'sale'"
+                                groups="vision_product.group_submit_technical_review"/>
+                        <!--                        驳回销售-->
+                        <button name="action_reject_technical_review"
+                                string="驳回"
+                                type="object"
+                                class="oe_highlight btn-danger"
+                                invisible="state != 'technical_review'"
+                                groups="vision_product.group_reject_technical_review"/>
+                        <!--                        配置完成-->
+                        <button name="action_submit_done"
+                                string="审核完成"
+                                type="object"
+                                class="oe_highlight"
+                                invisible="state != 'technical_review'"
+                                groups="vision_product.group_submit_done"/>
+                        <!--                        驳回配置-->
+                        <button name="action_reject_done"
+                                string="驳回"
+                                type="object"
+                                class="oe_highlight btn-danger"
+                                invisible="state != 'done'"
+                                groups="vision_product.group_reject_done"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <group col="4">
+                            <group>
+                                <field name="product_id"
+                                       options="{'no_create': True, 'no_open': True, 'no_create_edit': True}"/>
+                                <label for="category_id"/>
+                                <div class="o_row">
+                                    <field name="category_id"/>
+                                    <field name="barcode"/>
+                                </div>
+                                <label for="model"/>
+                                <div class="o_row">
+                                    <field name="model"/>
+                                    图号：
+                                    <field name="drawing_number"/>
+                                </div>
+                            </group>
+                            <group>
+                                <field name="name"/>
+                                <field name="bom_type"/>
+                                <field name="subcontractor_id"
+                                       options="{'no_create': True, 'no_open': True, 'no_create_edit': True}"/>
+                            </group>
+                            <group>
+                                <field name="design_standard_id"/>
+                                <field name="packing_type_id"
+                                       options="{'no_create': True, 'no_open': True, 'no_create_edit': True}"/>
+                                <field name="bom_template_id"
+                                       options="{'no_create': True, 'no_open': True, 'no_create_edit': True}"/>
+                            </group>
+                            <group>
+                                <label for="gp20"/>
+                                <div class="o_row">
+                                    <field name="gp20"/>40GP：<field name="gp40"/>40HQ：
+                                    <field name="gp40hq"/>
+                                </div>
+                                <label for="length"/>
+                                <div class="o_row">
+                                    <field name="length"/>宽：<field name="width"/>高：
+                                    <field name="height"/>
+                                </div>
+                                <label for="purchase_cost" groups="vision_product.group_bom_price_show"/>
+                                <div class="o_row">
+                                    <field name="purchase_cost" groups="vision_product.group_bom_price_show"/>工厂费用：
+                                    <field name="factory_cost" groups="vision_product.group_bom_price_show"/>
+                                </div>
+                                <field name="total_cost" groups="vision_product.group_bom_price_show"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="组件">
+                                <field name="bom_line" context="{'one2many_copy': True}">
+                                    <tree editable="bottom" default_order="sequence desc">
+                                        <field name="sequence" class="text-center"/>
+                                        <field name="category_id"
+                                               options="{'no_create': True, 'no_open': True, 'no_create_edit': True}"/>
+                                        <field name="supplier_id"
+                                               options="{'no_create': True, 'no_open': True, 'no_create_edit': True}"/>
+                                        <field name="barcode"/>
+                                        <field name="model"/>
+                                        <field name="drawing_number"/>
+                                        <field name="product_id" width="400px"/>
+                                        <field name="product_qty"/>
+                                        <field name="uom_id"/>
+                                        <field name="note"/>
+                                        <field name="price_id"/>
+                                        <field name="price" groups="vision_product.group_bom_price_show"/>
+                                        <field name="subtotal" sum="subtotal"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!--        bom_action-->
+        <record id="bom_action" model="ir.actions.act_window">
+            <field name="name">BOM</field>
+            <field name="res_model">mrp.bom</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_vision_bom"
+                  name="BOM"
+                  action="bom_action"
+                  parent="menu_vision_engineering_technology"
+                  sequence="3"/>
+
+        <record id="vision_mrp_bom_template_tree" model="ir.ui.view">
+            <field name="name">vision_mrp_bom_template_tree</field>
+            <field name="model">mrp.bom.template</field>
+            <field name="arch" type="xml">
+                <tree string="BOM模板">
+                    <field name="name"/>
+                    <field name="category_ids" widget="many2many_tags"/>
+                </tree>
+            </field>
+        </record>
+        <!--        vision_mrp_bom_template_form-->
+        <record id="vision_mrp_bom_template_form" model="ir.ui.view">
+            <field name="name">vision_mrp_bom_template_form</field>
+            <field name="model">mrp.bom.template</field>
+            <field name="arch" type="xml">
+                <form string="BOM模板">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="category_ids" widget="many2many_tags"/>
+                        </group>
+                        <notebook>
+                            <page string="模板明细">
+                                <field name="bom_line" context="{'one2many_copy': True}">
+                                    <tree editable="bottom" default_order="sequence desc">
+                                        <field name="sequence" class="text-center"/>
+                                        <field name="category_id"
+                                               options="{'no_create': True, 'no_open': True, 'no_create_edit': True}"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="vision_mrp_bom_template_action" model="ir.actions.act_window">
+            <field name="name">BOM模板</field>
+            <field name="res_model">mrp.bom.template</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!--        bom模板-->
+        <menuitem id="menu_vision_mrp_bom_template"
+                  name="BOM模板"
+                  action="vision_mrp_bom_template_action"
+                  parent="menu_vision_engineering_technology"
+                  sequence="4"/>
+    </data>
+</odoo>

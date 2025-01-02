@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <!--            vision.product.property_tree视图-->
+        <record id="vision_product_property_tree" model="ir.ui.view">
+            <field name="name">vision.product.property.tree</field>
+            <field name="model">vision.product.property</field>
+            <field name="arch" type="xml">
+                <tree string="属性">
+                    <field name="name"/>
+                    <field name="category_id"/>
+                    <field name="description"/>
+                    <field name="property_line_ids"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--            vision.product.property_form视图-->
+        <record id="vision_product_property_form" model="ir.ui.view">
+            <field name="name">vision.product.property.form</field>
+            <field name="model">vision.product.property</field>
+            <field name="arch" type="xml">
+                <form string="属性">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="category_id"
+                                   options="{'no_create': True, 'no_open': True, 'no_create_edit': True}"/>
+                            <field name="description"/>
+                        </group>
+                        <notebook>
+                            <page string="属性值">
+                                <field name="property_line_ids">
+                                    <tree string="属性值"
+                                          editable="bottom"
+                                          widget="section_and_note_one2many"
+                                          mode="tree">
+                                        <field name="name"/>
+                                        <field name="code"/>
+                                        <field name="sep_value"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" groups="base.group_user"
+                               options="{'post_refresh': 'recipients'}"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!--            vision_engineering_technology_attribute_action-->
+        <record id="vision_engineering_technology_attribute_action" model="ir.actions.act_window">
+            <field name="name">属性</field>
+            <field name="res_model">vision.product.property</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!--        属性-->
+        <menuitem id="menu_vision_engineering_technology_attribute"
+                  name="属性"
+                  parent="menu_vision_product_config"
+                  action="vision_engineering_technology_attribute_action"
+                  sequence="2"/>
+    </data>
+</odoo>

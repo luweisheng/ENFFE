@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+<!--        客户tree视图-->
+        <record id="view_corporation_tree" model="ir.ui.view">
+            <field name="name">res.corporation.tree</field>
+            <field name="model">res.corporation</field>
+            <field name="arch" type="xml">
+                <tree string="客户">
+                    <field name="name"/>
+                    <field name="phone"/>
+                    <field name="email"/>
+                    <field name="address"/>
+                </tree>
+            </field>
+        </record>
+
+<!--        客户form视图-->
+        <record id="view_corporation_form" model="ir.ui.view">
+            <field name="name">res.corporation.form</field>
+            <field name="model">res.corporation</field>
+            <field name="arch" type="xml">
+                <form string="客户">
+                    <group>
+                        <field name="name"/>
+                        <field name="phone"/>
+                        <field name="email"/>
+                        <field name="address"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <!--        客户action-->
+        <record id="action_corporation" model="ir.actions.act_window">
+            <field name="name">客户</field>
+            <field name="res_model">res.corporation</field>
+            <field name="view_mode">tree,form</field>
+
+        </record>
+
+        <!--        客户menu-->
+        <menuitem id="menu_corporation"
+                  name="客户"
+                  parent="menu_sale"
+                  action="action_corporation"
+                  sequence="2" groups="base.group_user"/>
+    </data>
+</odoo>
+

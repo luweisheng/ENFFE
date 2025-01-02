@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_vision_product_form202412281105" model="ir.ui.view">
+            <field name="name">产品form视图</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="vision_product.view_vision_product_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='button_box']" position="inside">
+                    <button class="oe_stat_button"
+                            name="action_open_quantity_tree_view"
+                            type="object"
+                            icon="fa-file-text-o">
+                        <field string="现有量" name="product_quantity" widget="statinfo"/>
+                    </button>
+                </xpath>
+                <xpath expr="//header" position="inside">
+                    <button name="action_open_availability_query_view" string="可用量查询" type="object"
+                            class="btn-primary"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_vision_module_password_form" model="ir.ui.view">
+            <field name="name">input password</field>
+            <field name="model">vision.module.password</field>
+            <field name="arch" type="xml">
+                <form>
+
+                    <sheet>
+                        <field name="password"/>
+                    </sheet>
+                    <footer>
+                        <button name="button_immediate_install" string="确认" type="object" class="btn-primary W-100"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <!--        product_category_search_view-->
+        <record id="product_search_view" model="ir.ui.view">
+            <field name="name">产品搜索视图</field>
+            <field name="model">product.product</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="barcode"/>
+                    <field name="category_id"/>
+                    <searchpanel>
+                        <field name="category_id" enable_counters="1"/>
+                    </searchpanel>
+                    <!--                    默认类别分组-->
+                    <group expand="0" string="默认类别分组">
+                        <filter name="category_id" string="类别" domain="[]" context="{'group_by': 'category_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!--        产品tree视图-->
+        <record id="view_vision_product_tree" model="ir.ui.view">
+            <field name="name">产品tree视图</field>
+            <field name="model">product.product</field>
+            <field name="arch" type="xml">
+                <tree string="产品">
+                    <field name="category_id"/>
+                    <field name="barcode"/>
+                    <field name="model"/>
+                    <field name="drawing_number"/>
+                    <field name="name" string="规格描述"/>
+                    <field name="stock_type"/>
+                    <field name="sale_ok"/>
+                    <field name="purchase_ok"/>
+                    <field name="packing_type_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--        产品form视图-->
+        <record id="view_vision_product_form" model="ir.ui.view">
+            <field name="name">产品form视图</field>
+            <field name="model">product.product</field>
+            <field name="arch" type="xml">
+                <form string="产品">
+                    <header>
+                        <button name="test" type="object" string="测试" class="btn-primary"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button class="oe_stat_button"
+                                name="action_open_bom"
+                                type="object"
+                                icon="fa-file-text-o">
+                            <field string="BOM" name="bom_count" widget="statinfo"/>
+                        </button>
+                        </div>
+                        <field name="image_1920" widget="image" class="oe_avatar"/>
+                        <div class="oe_title">
+                            <h1>
+                                <div class="d-flex">
+                                    <field name="priority" widget="priority" class="me-3"/>
+                                    <field class="text-break" name="name" options="{'line_breaks': False}" widget="text"
+                                           placeholder="待描述..." readonly="True" force_save="1"/>
+                                </div>
+                            </h1>
+                        </div>
+                        <group string="产品信息" col="4">
+                            <group>
+                                <field name="category_id"
+                                       options="{'no_create_edit': True, 'no_create': True, 'no_open': True}"/>
+                                <field name="barcode" redonly="True"/>
+                                <field name="stock_type"/>
+                                <field name="packing_type_id"/>
+                            </group>
+                            <group>
+                                <field name="model"/>
+                                <field name="drawing_number"/>
+                                <field name="sale_ok"/>
+                            </group>
+                            <group>
+                                <field name="prefix"/>
+                                <field name="suffix"/>
+                                <field name="purchase_ok"/>
+                            </group>
+                            <group>
+                                <field name="uom_id"/>
+                                <field name="po_uom_id"/>
+                                <field name="uom_factor"
+                                       options="{'no_create': True, 'no_open': True, 'no_create_edit': True}"/>
+                                <field name="uom_factor_instructions"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="模板" name="builder">
+                                <field name="builder_line_ids">
+                                    <tree string="模板" editable="bottom" create="0" delete="0" mode="tree">
+                                        <field name="property_id"/>
+                                        <field name="property_value_id" required="required"
+                                               options="{'no_create_edit': True, 'no_quick_create': True, 'no_open': True}"/>
+                                        <field name="code"/>
+                                        <field name="sep_value"/>
+                                        <field name="required"/>
+                                        <field name="participate_code"/>
+                                        <field name="show_name"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <!--                            价格表-->
+                            <page string="价格表" name="price">
+                                <field name="price_ids">
+                                    <tree string="价格表" editable="bottom" mode="tree">
+                                        <field name="name"/>
+                                        <field name="price"/>
+                                        <field name="min_qty"/>
+                                        <field name="note"/>
+                                    </tree>
+                                </field>
+                            </page>
+<!--                            价格变更记录-->
+                            <page string="价格变更记录" name="price_change">
+                                <field name="price_change_ids" readonly="1">
+                                    <tree string="价格变更记录" editable="bottom" create="0" mode="tree">
+                                        <field name="price_id"/>
+                                        <field name="change_type"/>
+                                        <field name="old_price"/>
+                                        <field name="new_price"/>
+                                        <field name="create_date" string="变更时间"/>
+                                        <field name="create_uid" string="变更人"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!--        product_action-->
+        <record model="ir.actions.act_window"
+                id="product_action">
+            <field name="name">产品信息</field>
+            <field name="res_model">product.product</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="product_search_view"/>
+        </record>
+
+        <!--        产品-->
+        <menuitem id="menu_vision_engineering_technology_product"
+                  name="产品"
+                  parent="menu_vision_engineering_technology"
+                  action="product_action"
+                  sequence="1"/>
+
+    </data>
+</odoo>

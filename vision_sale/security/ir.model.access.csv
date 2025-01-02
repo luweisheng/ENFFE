@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sale_type,sale_type,model_sale_type,,1,1,1,1
+access_res_team,res_team,model_res_team,,1,1,1,1
+access_delivery_address,delivery_address,model_delivery_address,,1,1,1,1
+access_production_factory,production_factory,model_production_factory,,1,1,1,1
+access_payment_terms,payment_terms,model_payment_terms,,1,1,1,1
+access_res_corporation,res_corporation,model_res_corporation,,1,1,1,1
+access_sale_order,sale_order,model_sale_order,,1,1,1,1
+access_sale_order_line,sale_order_line,model_sale_order_line,,1,1,1,1

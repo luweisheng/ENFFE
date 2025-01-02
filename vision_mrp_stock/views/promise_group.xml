@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="vision_company_group_form_view202401020914" model="ir.ui.view">
+            <field name="name">公司权限表</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="vision_mrp.view_company_form202412311408"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='company_mrp_group2']" position='inside'>
+                        <field name="virtual_production_location_id"/>
+                        <field name="module_consume_location_id"/>
+                        <field name="finished_location_id"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

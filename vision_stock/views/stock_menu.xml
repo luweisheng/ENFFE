@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <menuitem id="menu_stock"
+                  name="仓库"
+                  sequence="4"
+                  groups="base.group_user"
+                  web_icon="vision_stock,static/description/icon.png"/>
+
+        <!--        单据-->
+        <menuitem id="menu_stock_picking_list"
+                  name="单据"
+                  sequence="1"
+                  parent="menu_stock"
+                  groups="base.group_user"/>
+
+        <menuitem id="menu_stock_transfer"
+                  name="库存调拨"
+                  sequence="10"
+                  parent="menu_stock"
+                  groups="base.group_user"/>
+
+        <!--        配置-->
+        <menuitem id="menu_stock_report"
+                  name="库存报表"
+                  sequence="20"
+                  parent="menu_stock"
+                  groups="base.group_user"/>
+
+        <!--        配置-->
+        <menuitem id="menu_stock_config"
+                  name="配置"
+                  sequence="21"
+                  parent="menu_stock"
+                  groups="base.group_user"/>
+    </data>
+</odoo>

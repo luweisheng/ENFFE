@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+<!--        product_category_search_view-->
+
+        <record id="product_category_tree_view" model="ir.ui.view">
+            <field name="name">类别tree视图</field>
+            <field name="model">product.category</field>
+            <field name="arch" type="xml">
+                <tree string="产品">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="barcode_length"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="product_category_form_view" model="ir.ui.view">
+            <field name="name">类别form视图</field>
+            <field name="model">product.category</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group col="4">
+                            <group>
+                                <field name="name"/>
+                                <field name="code"/>
+                            </group>
+                            <group>
+                                <field name="barcode_length"/>
+                                <field name="sequence"/>
+                            </group>
+                            <group>
+                                <field name="sale_ok"/>
+                                <field name="purchase_ok"/>
+                            </group>
+                            <group>
+                                <field name="uom_id"
+                                       options="{'no_create': True, 'no_open': True, 'no_create_edit': True}"/>
+                                <field name="po_uom_id"
+                                       options="{'no_create': True, 'no_open': True, 'no_create_edit': True}"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="类别属性" name="builder">
+                                <field name="builder_line_ids">
+                                    <tree string="属性"
+                                          mode="tree">
+                                        <field name="name" widget="20%"/>
+                                        <field name="required" widget="20%"/>
+                                        <field name="participate_code" widget="20%"/>
+                                        <field name="show_name" widget="20%"/>
+                                        <field name="note" widget="20%"/>
+                                        <!--复制按钮-->
+                                        <button name="property_copy" icon="fa-copy" type="object" string=" "/>
+                                    </tree>
+                                    <form string="属性">
+                                        <sheet>
+                                            <group>
+                                                <group>
+                                                    <field name="name"/>
+                                                    <field name="required"/>
+                                                </group>
+                                                <group>
+                                                    <field name="participate_code"/>
+                                                    <field name="show_name"/>
+                                                </group>
+                                            </group>
+                                            <notebook>
+                                                <page string="属性值">
+                                                    <field name="property_line_ids">
+                                                        <tree string="属性值"
+                                                              editable="bottom"
+                                                              widget="section_and_note_one2many"
+                                                              mode="tree">
+                                                            <field name="name" widget="40%"/>
+                                                            <field name="code" widget="30%"/>
+                                                            <field name="sep_value" widget="30%"/>
+
+                                                        </tree>
+                                                    </field>
+                                                </page>
+                                            </notebook>
+                                        </sheet>
+                                        <div class="oe_chatter">
+                                            <field name="message_follower_ids" groups="base.group_user"
+                                                   options="{'post_refresh': 'recipients'}"/>
+                                            <field name="activity_ids"/>
+                                            <field name="message_ids"/>
+                                        </div>
+                                    </form>
+                                </field>
+                            </page>
+                            <page string="产品列表" name="product_line">
+                                <field name="product_ids" readonly="1">
+                                    <tree string="产品列表"
+                                          editable="bottom"
+                                          mode="tree">
+                                        <field name="barcode"/>
+                                        <field name="model"/>
+                                        <field name="name"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!--        product_category_action-->
+        <record model="ir.actions.act_window" id="product_category_action">
+            <field name="name">类别</field>
+            <field name="res_model">product.category</field>
+            <field name="view_mode">tree,form</field>
+
+        </record>
+
+        <!--        类别-->
+        <menuitem id="menu_vision_engineering_technology_category"
+                  name="类别"
+                  action="product_category_action"
+                  parent="menu_vision_engineering_technology"
+                  sequence="2"/>
+
+    </data>
+</odoo>

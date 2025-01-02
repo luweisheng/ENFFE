@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <!--        vision_design_standard_tree-->
+        <record id="vision_mrp_factory_tree_view" model="ir.ui.view">
+            <field name="name">设计标准tree视图</field>
+            <field name="model">production.factory</field>
+            <field name="arch" type="xml">
+                <tree string="设计标准">
+                    <field name="name"/>
+                    <field name="manager_id"/>
+                    <field name="code"/>
+                    <field name="address"/>
+                    <field name="phone"/>
+                    <field name="fax"/>
+                    <field name="email"/>
+                    <field name="contact"/>
+                    <field name="mobile"/>
+                    <field name="note"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--        vision_design_standard_form-->
+        <record id="vision_mrp_factory_view" model="ir.ui.view">
+            <field name="name">工厂form视图</field>
+            <field name="model">production.factory</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="manager_id"/>
+                            <field name="code"/>
+                            <field name="address"/>
+                            <field name="phone"/>
+                            <field name="fax"/>
+                            <field name="email"/>
+                            <field name="contact"/>
+                            <field name="mobile"/>
+                            <field name="note"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <!--        vision_design_standard_action-->
+        <record id="action_vision_mrp_factory" model="ir.actions.act_window">
+            <field name="name">工厂</field>
+            <field name="res_model">production.factory</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_vision_mrp_factory"
+                  name="工厂"
+                  parent="vision_mrp.menu_mrp"
+                  action="action_vision_mrp_factory"
+                  sequence="2"
+                  groups="base.group_user"/>
+    </data>
+</odoo>

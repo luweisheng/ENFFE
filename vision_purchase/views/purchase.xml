@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!--        采购订单tree视图-->
+        <record id="view_vision_purchase_order_tree" model="ir.ui.view">
+            <field name="name">purchase.order.tree</field>
+            <field name="model">purchase.order</field>
+            <field name="arch" type="xml">
+                <tree string="订单">
+                    <field name="name"/>
+                    <field name="sale_order_id"/>
+                    <field name="contract_no"/>
+                    <field name="supplier_id"/>
+                    <field name="user_id"/>
+                    <field name="date_order"/>
+                    <field name="date_planned"/>
+                    <field name="state"/>
+                    <field name="amount_total"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--        采购订单form视图-->
+        <record id="view_vision_purchase_order_form" model="ir.ui.view">
+            <field name="name">purchase.order.form</field>
+            <field name="model">purchase.order</field>
+            <field name="arch" type="xml">
+                <form string="订单">
+                    <header>
+                        <button name="action_confirm"
+                                string="发送报价"
+                                type="object"
+                                invisible="state != 'draft'"
+                                class="oe_highlight"/>
+                        <button name="action_done"
+                                string="确认"
+                                type="object"
+                                invisible="state not in ('draft', 'confirm')"
+                                class="oe_highlight"/>
+                        <button name="action_cancel" string="取消" type="object" class="oe_highlight btn btn-danger" invisible="state == 'draft'"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,confirm,done"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <div class="d-flex">
+                                    <field class="text-break" name="name" options="{'line_breaks': False}" widget="text"
+                                           readonly="True" force_save="1"/>
+                                </div>
+                            </h1>
+                        </div>
+                        <group col="4">
+                            <group>
+                                <field name="supplier_id"/>
+                                <field name="user_id"/>
+                            </group>
+                            <group>
+                                <field name="date_order"/>
+                                <field name="date_planned"/>
+                                <field name="delivery_date"/>
+                                <field name="sale_date_planned"/>
+                            </group>
+                            <group>
+                                <field name="trade_term_id"/>
+                                <label for="tax_included"/>
+                                <div class="o_row">
+                                    <field name="tax_included"/>
+                                    税率<field name="tax_rate"/>
+                                </div>
+                                <field name="delivery_address_id"/>
+                            </group>
+                            <group>
+                                <field name="sale_order_id"/>
+                                <field name="contract_no"/>
+<!--                                <field name="amount_total"/>-->
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="订单明细">
+                                <field name="order_line">
+                                    <tree string="订单明细" editable="bottom">
+                                        <field name="category_id"/>
+                                        <field name="barcode"/>
+                                        <field name="model"/>
+                                        <field name="product_id" width="400px" options="{'no_create': True, 'no_open': True, 'no_create_edit': True}"/>
+                                        <field name="product_uom_id"/>
+                                        <field name="product_qty"/>
+                                        <field name="price_unit"/>
+                                        <field name="price_subtotal" sum="price_subtotal"/>
+                                        <field name="delivery_date"/>
+                                        <field name="delivery_address_id"/>
+                                        <field name="note"/>
+                                    </tree>
+                                </field>
+                            </page>
+<!--                            采购清单-->
+                            <page string="采购清单">
+                                <field name="order_line_list">
+                                    <tree string="采购清单" editable="bottom">
+                                        <field name="category_id"/>
+                                        <field name="barcode"/>
+                                        <field name="model"/>
+                                        <field name="product_id" width="400px"/>
+                                        <field name="product_uom_id"/>
+                                        <field name="product_qty"/>
+                                        <field name="price_unit"/>
+                                        <field name="price_subtotal" sum="price_subtotal"/>
+                                        <field name="delivery_date"/>
+                                        <field name="delivery_address_id"/>
+                                        <field name="note"/>
+                                        <field name="main_bom_id"/>
+                                        <field name="bom_id"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+
+        <!--        采购action-->
+        <record id="action_vision_purchase_order" model="ir.actions.act_window">
+            <field name="name">采购订单</field>
+            <field name="res_model">purchase.order</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!--        采购明细tree视图-->
+        <record id="view_vision_purchase_order_line_tree" model="ir.ui.view">
+            <field name="name">purchase.order.line.tree</field>
+            <field name="model">purchase.order.line</field>
+            <field name="arch" type="xml">
+                <tree string="订单明细">
+                    <field name="order_id"/>
+                    <field name="sale_order_id"/>
+                    <field name="supplier_id"/>
+                    <field name="category_id"/>
+                    <field name="barcode"/>
+                    <field name="model"/>
+                    <field name="drawing_number"/>
+                    <field name="product_id" widget="100px"/>
+                    <field name="product_uom_id"/>
+                    <field name="product_qty"/>
+                    <field name="price_unit"/>
+                    <field name="price_subtotal"/>
+                    <field name="date_order"/>
+<!--                    <field name="delivery_address_id"/>-->
+                    <field name="note"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--        采购明细action-->
+        <record id="action_vision_purchase_order_line" model="ir.actions.act_window">
+            <field name="name">采购明细</field>
+            <field name="res_model">purchase.order.line</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!--        采购menu-->
+        <menuitem id="menu_purchase"
+                  name="采购"
+                  sequence="2"
+                  web_icon="vision_purchase,static/description/icon.png"/>
+
+        <!--        订单信息menu-->
+        <menuitem id="menu_purchase_order_data"
+                  name="订单信息"
+                  parent="menu_purchase"
+                  sequence="1"/>
+
+        <!--        采购订单menu-->
+        <menuitem id="menu_purchase_order"
+                  name="采购订单"
+                  parent="menu_purchase_order_data"
+                  action="action_vision_purchase_order"
+                  sequence="1"/>
+
+        <!--        采购明细menu-->
+        <menuitem id="menu_purchase_order_line"
+                  name="采购明细"
+                  parent="menu_purchase_order_data"
+                  action="action_vision_purchase_order_line"
+                  sequence="2"/>
+
+        <menuitem id="menu_product_price_data"
+                  name="价格表"
+                  parent="menu_purchase"
+                  action="vision_product.action_product_price"
+                  sequence="2"/>
+
+        <!--        供应商menu-->
+        <menuitem id="menu_res_supplier"
+                  name="供应商"
+                  parent="menu_purchase"
+                  action="vision_product.action_supplier_order"
+                  sequence="1"/>
+
+    </data>
+</odoo>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="production_release_inventory_form" model="ir.ui.view">
+            <field name="name">发布库存</field>
+            <field name="model">production.release.inventory</field>
+            <field name="arch" type="xml">
+                <form string="发布库存">
+                    <sheet>
+                        <group col="3">
+                            <group>
+                                <field name="product_id"/>
+                                <field name="product_qty"/>
+                            </group>
+                            <group>
+                                <field name="order_qty"/>
+                                <field name="done_qty"/>
+                            </group>
+                            <group>
+                                <field name="module_consume_location_id"/>
+                                <field name="finished_location_id"/>
+                                <field name="virtual_production_location_id"/>
+                            </group>
+                        </group>
+                        <button name="release_inventory" string="发布库存" type="object" class="btn btn-primary w-100"/>
+                        <notebook>
+                            <page string="产品" nolabel="1">
+                                <field name="release_inventory_line">
+                                    <tree string="产品" create="0" editable="1" delete="0">
+                                        <field name="category_id"/>
+                                        <field name="barcode"/>
+                                        <field name="model"/>
+                                        <field name="product_id"/>
+                                        <field name="product_qty"/>
+                                        <field name="picking_qty"/>
+                                        <field name="consume_qty"/>
+                                        <field name="current_consumption_qty"/>
+                                        <field name="product_uom_id"/>
+                                        <field name="unit_factor"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <footer/>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

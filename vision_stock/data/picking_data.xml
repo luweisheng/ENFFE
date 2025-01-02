@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+<!--        供应商位置-->
+        <record id="stock_partner_location" model="stock.location">
+            <field name="name">供应商位置</field>
+            <field name="code">partner</field>
+            <field name="location_type">partner</field>
+        </record>
+
+        <record id="stock_client_location" model="stock.location">
+            <field name="name">客户位置</field>
+            <field name="code">client</field>
+            <field name="location_type">client</field>
+        </record>
+
+        <record id="stock_cpc_location" model="stock.location">
+            <field name="name">成品仓</field>
+            <field name="code">CPC</field>
+            <field name="location_type">internal</field>
+        </record>
+
+        <record id="stock_ljc_location" model="stock.location">
+            <field name="name">零件仓</field>
+            <field name="code">LJC</field>
+            <field name="location_type">internal</field>
+        </record>
+
+        <record id="stock_sccj_location" model="stock.location">
+            <field name="name">生产车间</field>
+            <field name="code">SCCJ</field>
+            <field name="location_type">internal</field>
+        </record>
+
+        <record id="stock_xnc_location" model="stock.location">
+            <field name="name">虚拟仓</field>
+            <field name="code">XNC</field>
+            <field name="location_type">virtual</field>
+        </record>
+
+        <record id="stock_cgrk_picking_sequence" model="ir.sequence">
+            <field name="name">CGRK</field>
+            <field name="code">stock.cgrk</field>
+            <field name="prefix">CGRK</field>
+            <field name="padding">7</field>
+        </record>
+
+        <record id="stock_picking_type_cgrk" model="stock.picking.type">
+            <field name="name">采购入库</field>
+            <field name="code">CGRK</field>
+            <field name="sequence_id" ref="stock_cgrk_picking_sequence"/>
+            <field name="location_src_id" ref="stock_partner_location"/>
+            <field name="location_dest_id" ref="stock_ljc_location"/>
+        </record>
+
+        <record id="stock_cgth_picking_sequence" model="ir.sequence">
+            <field name="name">CGTH</field>
+            <field name="code">stock.cgth</field>
+            <field name="prefix">CGTH</field>
+            <field name="padding">7</field>
+        </record>
+
+        <record id="stock_picking_type_cgth" model="stock.picking.type">
+            <field name="name">采购退货</field>
+            <field name="code">CGTH</field>
+            <field name="sequence_id" ref="stock_cgth_picking_sequence"/>
+            <field name="location_src_id" ref="stock_ljc_location"/>
+            <field name="location_dest_id" ref="stock_partner_location"/>
+        </record>
+
+        <record id="stock_scll_picking_sequence" model="ir.sequence">
+            <field name="name">SCLL</field>
+            <field name="code">stock.scll</field>
+            <field name="prefix">SCLL</field>
+            <field name="padding">7</field>
+        </record>
+
+        <record id="stock_picking_type_scll" model="stock.picking.type">
+            <field name="name">生产领料</field>
+            <field name="code">SCLL</field>
+            <field name="sequence_id" ref="stock_scll_picking_sequence"/>
+            <field name="location_src_id" ref="stock_ljc_location"/>
+            <field name="location_dest_id" ref="stock_sccj_location"/>
+        </record>
+
+        <record id="stock_sctl_picking_sequence" model="ir.sequence">
+            <field name="name">SCTL</field>
+            <field name="code">stock.sctl</field>
+            <field name="prefix">SCTL</field>
+            <field name="padding">7</field>
+        </record>
+
+        <record id="stock_picking_type_sctl" model="stock.picking.type">
+            <field name="name">生产退料</field>
+            <field name="code">SCTL</field>
+            <field name="sequence_id" ref="stock_sctl_picking_sequence"/>
+            <field name="location_src_id" ref="stock_sccj_location"/>
+            <field name="location_dest_id" ref="stock_ljc_location"/>
+        </record>
+
+        <record id="stock_wgrk_picking_sequence" model="ir.sequence">
+            <field name="name">WGRK</field>
+            <field name="code">stock.wgrk</field>
+            <field name="prefix">WGRK</field>
+            <field name="padding">7</field>
+        </record>
+
+        <record id="stock_picking_type_wgrk" model="stock.picking.type">
+            <field name="name">完工入库</field>
+            <field name="code">WGRK</field>
+            <field name="sequence_id" ref="stock_wgrk_picking_sequence"/>
+            <field name="location_src_id" ref="stock_sccj_location"/>
+            <field name="location_dest_id" ref="stock_cpc_location"/>
+        </record>
+
+        <record id="stock_wgtk_picking_sequence" model="ir.sequence">
+            <field name="name">WGTK</field>
+            <field name="code">stock.wgtk</field>
+            <field name="prefix">WGTK</field>
+            <field name="padding">7</field>
+        </record>
+
+        <record id="stock_picking_type_wgtk" model="stock.picking.type">
+            <field name="name">完工退库</field>
+            <field name="code">WGTK</field>
+            <field name="sequence_id" ref="stock_wgtk_picking_sequence"/>
+            <field name="location_src_id" ref="stock_cpc_location"/>
+            <field name="location_dest_id" ref="stock_sccj_location"/>
+        </record>
+
+        <record id="stock_wwrk_picking_sequence" model="ir.sequence">
+            <field name="name">WWRK</field>
+            <field name="code">stock.wwrk</field>
+            <field name="prefix">WWRK</field>
+            <field name="padding">7</field>
+
+        </record>
+
+        <record id="stock_picking_type_wwrk" model="stock.picking.type">
+            <field name="name">委外入库</field>
+            <field name="code">WWRK</field>
+            <field name="sequence_id" ref="stock_wwrk_picking_sequence"/>
+            <field name="location_src_id" ref="stock_partner_location"/>
+            <field name="location_dest_id" ref="stock_cpc_location"/>
+        </record>
+
+        <record id="stock_wwth_picking_sequence" model="ir.sequence">
+            <field name="name">WWTH</field>
+            <field name="code">stock.wwth</field>
+            <field name="prefix">WWTH</field>
+            <field name="padding">7</field>
+        </record>
+
+        <record id="stock_picking_type_wwth" model="stock.picking.type">
+            <field name="name">委外退货</field>
+            <field name="code">WWTH</field>
+            <field name="sequence_id" ref="stock_wwth_picking_sequence"/>
+            <field name="location_src_id" ref="stock_cpc_location"/>
+            <field name="location_dest_id" ref="stock_partner_location"/>
+        </record>
+
+        <record id="stock_wwfl_picking_sequence" model="ir.sequence">
+            <field name="name">WWFL</field>
+            <field name="code">stock.wwfl</field>
+            <field name="prefix">WWFL</field>
+            <field name="padding">7</field>
+        </record>
+
+        <record id="stock_picking_type_wwfl" model="stock.picking.type">
+            <field name="name">委外发料</field>
+            <field name="code">WWFL</field>
+            <field name="sequence_id" ref="stock_wwfl_picking_sequence"/>
+            <field name="location_src_id" ref="stock_ljc_location"/>
+            <field name="location_dest_id" ref="stock_partner_location"/>
+        </record>
+
+        <record id="stock_wwtl_picking_sequence" model="ir.sequence">
+            <field name="name">WWTL</field>
+            <field name="code">stock.wwtl</field>
+            <field name="prefix">WWTL</field>
+            <field name="padding">7</field>
+        </record>
+
+        <record id="stock_picking_type_wwtl" model="stock.picking.type">
+            <field name="name">委外退料</field>
+            <field name="code">WWTL</field>
+            <field name="sequence_id" ref="stock_wwtl_picking_sequence"/>
+            <field name="location_src_id" ref="stock_partner_location"/>
+            <field name="location_dest_id" ref="stock_ljc_location"/>
+        </record>
+
+        <record id="stock_xsch_picking_sequence" model="ir.sequence">
+            <field name="name">XSCH</field>
+            <field name="code">stock.xsch</field>
+            <field name="prefix">XSCH</field>
+            <field name="padding">7</field>
+        </record>
+
+        <record id="stock_picking_type_xsch" model="stock.picking.type">
+            <field name="name">销售出货</field>
+            <field name="code">XSCH</field>
+            <field name="sequence_id" ref="stock_xsch_picking_sequence"/>
+            <field name="location_src_id" ref="stock_cpc_location"/>
+            <field name="location_dest_id" ref="stock_client_location"/>
+        </record>
+
+        <record id="stock_xsth_picking_sequence" model="ir.sequence">
+            <field name="name">XSTH</field>
+            <field name="code">stock.xsth</field>
+            <field name="prefix">XSTH</field>
+            <field name="padding">7</field>
+        </record>
+
+        <record id="stock_picking_type_xsth" model="stock.picking.type">
+            <field name="name">销售退货</field>
+            <field name="code">XSTH</field>
+            <field name="sequence_id" ref="stock_xsth_picking_sequence"/>
+            <field name="location_src_id" ref="stock_client_location"/>
+            <field name="location_dest_id" ref="stock_cpc_location"/>
+        </record>
+
+        <record id="stock_qtrk_picking_sequence" model="ir.sequence">
+            <field name="name">QTRK</field>
+            <field name="code">stock.qtrk</field>
+            <field name="prefix">QTRK</field>
+            <field name="padding">7</field>
+        </record>
+
+        <record id="stock_picking_type_qtrk" model="stock.picking.type">
+            <field name="name">其它入库</field>
+            <field name="code">QTRK</field>
+            <field name="sequence_id" ref="stock_qtrk_picking_sequence"/>
+        </record>
+
+        <record id="stock_qtck_picking_sequence" model="ir.sequence">
+            <field name="name">QTCK</field>
+            <field name="code">stock.qtck</field>
+            <field name="prefix">QTCK</field>
+            <field name="padding">7</field>
+        </record>
+
+        <record id="stock_picking_type_qtck" model="stock.picking.type">
+            <field name="name">其它出库</field>
+            <field name="code">QTCK</field>
+            <field name="sequence_id" ref="stock_qtck_picking_sequence"/>
+        </record>
+
+        <record id="stock_nbdb_picking_sequence" model="ir.sequence">
+            <field name="name">NBDB</field>
+            <field name="code">stock.nbdb</field>
+            <field name="prefix">NBDB</field>
+            <field name="padding">7</field>
+        </record>
+
+        <record id="stock_picking_type_nbdb" model="stock.picking.type">
+            <field name="name">内部调拨</field>
+            <field name="code">NBDB</field>
+            <field name="sequence_id" ref="stock_nbdb_picking_sequence"/>
+        </record>
+
+    </data>
+</odoo>

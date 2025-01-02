@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!--        在采购form视图明细行添加入库数-->
+        <record id="view_vision_purchase_order_form202411211514" model="ir.ui.view">
+            <field name="name">采购明细添加已收料、未收料</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="vision_purchase.view_vision_purchase_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header" position="inside">
+                    <button name="update_stock_in" string="更新收料数" type="object" class="btn-primary"
+                            invisibel="state == 'draft'"/>
+                </xpath>
+                <xpath expr="//sheet/group/group[1]" position="inside">
+                    <field name="stock_in"/>
+                </xpath>
+                <xpath expr="//notebook/page/field[@name='order_line']/tree/field[@name='product_qty']"
+                       position="after">
+                    <field name="stock_qty"/>
+                    <field name="stock_qty_no"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_vision_purchase_order_tree202411211514" model="ir.ui.view">
+            <field name="name">采购明细添加收料状态</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="vision_purchase.view_vision_purchase_order_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree/field[@name='state']" position="after">
+                    <field name="stock_in"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
