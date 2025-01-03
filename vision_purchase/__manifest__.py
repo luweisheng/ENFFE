@@ -23,6 +23,7 @@ Long description of module's purpose
     # always loaded
     'data': [
         'security/ir.model.access.csv',
+        'security/security.xml',
         'views/purchase.xml',
         'data/seq_purchase.xml',
         # 'views/product_price.xml',
@@ -33,4 +34,3 @@ Long description of module's purpose
         'demo/demo.xml',
     ],
 }
-

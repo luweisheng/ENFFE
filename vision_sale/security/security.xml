@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+<odoo>
+    <record id="module_category_sale" model="ir.module.category">
+        <field name="name">销售权限</field>
+        <field name="sequence">30</field>
+    </record>
+
+    <record id="group_create_sale_done" model="res.groups">
+        <field name="name">销售下单权限</field>
+        <field name="category_id" ref="vision_sale.module_category_sale"/>
+        <field name="sequence">10</field>
+        <field name="users" eval="[Command.link(ref('base.user_root')), Command.link(ref('base.user_admin'))]"/>
+    </record>
+</odoo>

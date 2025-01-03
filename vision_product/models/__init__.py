@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 from . import res_groups
 from . import res_company
 from . import res_supplier

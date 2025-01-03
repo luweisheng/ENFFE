@@ -40,16 +40,15 @@
                         <button name="bulk_maintenance_price_list"
                                 string="维护价格表"
                                 class="oe_highlight"
+                                invisible="state != 'purchase'"
+                                groups="vision_product.group_bulk_maintenance_price_list"
                                 type="object"/>
-                        <!--                        <button name="action_next" string="下一步" type="object" class="oe_highlight" invisible="state == 'done'"/>-->
-                        <!--                        提交提交采购核价-->
                         <button name="action_submit_purchase"
                                 string="提交采购核价"
                                 type="object"
                                 class="oe_highlight"
                                 invisible="state != 'draft'"
                                 groups="vision_product.group_submit_purchase"/>
-                        
                         <!--                        驳回草稿-->
                         <button name="action_reject_purchase"
                                 string="驳回"

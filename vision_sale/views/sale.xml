@@ -41,6 +41,7 @@
                                 class="oe_highlight"/>
                         <button name="action_done"
                                 invisible="state != 'offer'"
+                                groups="vision_sale.group_create_sale_done"
                                 string="下单" type="object" class="oe_highlight"/>
                         <button name="action_cancel" string="取消"
                                 type="object" class="oe_highlight btn btn-danger"/>

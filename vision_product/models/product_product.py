@@ -225,7 +225,7 @@ class ProductProduct(models.Model):
     # 检查用户是否有产品创建权限
     @api.model
     def create(self, vals):
-        if not self.env.user.has_group('vision_product.group_product_create'):
+        if not self.env.user.has_group('vision_product.group_create_product'):
             raise UserError(_('您没有权限创建产品！'))
         return super(ProductProduct, self).create(vals)
 

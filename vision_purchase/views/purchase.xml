@@ -36,6 +36,7 @@
                                 string="确认"
                                 type="object"
                                 invisible="state not in ('draft', 'confirm')"
+                                groups="vision_purchase.group_create_purchase_done"
                                 class="oe_highlight"/>
                         <button name="action_cancel" string="取消" type="object" class="oe_highlight btn btn-danger" invisible="state == 'draft'"/>
                         <field name="state" widget="statusbar" statusbar_visible="draft,confirm,done"/>
