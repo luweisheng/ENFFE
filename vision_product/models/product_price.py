@@ -21,7 +21,7 @@ class ProductPrice(models.Model):
         for price in self:
             price.display_name = str(price.name.name) + ' - ' + str(price.price)
     # 产品
-    product_id = fields.Many2one('product.product', string='产品', required=True)
+    product_id = fields.Many2one('product.product', string='产品', required=True, track_visibility='onchange')
     # 类别
     category_id = fields.Many2one('product.category', string='类别', related='product_id.category_id', store=True)
     # 条码
@@ -31,18 +31,18 @@ class ProductPrice(models.Model):
     # 图号
     drawing_number = fields.Char(string='图号', related='product_id.drawing_number', store=True)
     # 起订量
-    min_qty = fields.Float(string='起订量', required=True, default=1)
+    min_qty = fields.Float(string='起订量', required=True, default=1, track_visibility='onchange')
     # 单价
-    price = fields.Float(string='单价', required=True, default=1)
+    price = fields.Float(string='单价', required=True, default=1, track_visibility='onchange')
     note = fields.Text(string='备注')
     # 含税
-    tax_included = fields.Boolean(string='含税')
+    tax_included = fields.Boolean(string='含税', track_visibility='onchange')
     # 税率
-    tax_rate = fields.Float(string='税率', default=0.13)
+    tax_rate = fields.Float(string='税率', default=0.13, track_visibility='onchange')
     # 含税单价
     tax_price = fields.Float(string='含税单价', compute='_compute_tax_price', store=True)
     # 交货提前期
-    delivery_lead_time = fields.Integer(string='交货提前期', default=7)
+    delivery_lead_time = fields.Integer(string='交货提前期', default=7, track_visibility='onchange')
 
     @api.depends('price', 'tax_rate')
     def _compute_tax_price(self):

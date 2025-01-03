@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
     <data>
-
-
         <!--        供应商tree视图-->
         <record id="view_supplier_order_tree" model="ir.ui.view">
             <field name="name">res.partner.tree</field>
@@ -10,11 +8,13 @@
             <field name="arch" type="xml">
                 <tree string="供应商">
                     <field name="name"/>
+                    <field name="user_id"/>
                     <field name="code"/>
                     <field name="address"/>
                     <field name="fax"/>
                     <field name="contact"/>
                     <field name="note"/>
+                    <field name="category_ids" widget="many2many_tags"/>
                 </tree>
             </field>
         </record>

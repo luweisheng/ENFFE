@@ -241,6 +241,9 @@ class MrpBom(models.Model):
                     'category_id': line.category_id.id
                 })]
 
+    # 技术负责人
+    technical_user_id = fields.Many2one('res.users', string='技术负责人', track_visibility='always')
+
 
 class MrpBomLine(models.Model):
     _name = 'mrp.bom.line'

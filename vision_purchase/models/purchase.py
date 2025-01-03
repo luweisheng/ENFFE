@@ -28,8 +28,7 @@ class PurchaseOrder(models.Model):
             self.tax_rate = self.supplier_id.tax_rate
 
     # 采购员
-    user_id = fields.Many2one('res.users', string='采购员', default=lambda self: self.env.user,
-                              track_visibility='always')
+    user_id = fields.Many2one('res.users', string='采购员', track_visibility='always')
     # 付款条款
     payment_term_id = fields.Many2one('res.payment.term', string='付款条款', track_visibility='always')
     # 贸易条款
@@ -78,6 +77,10 @@ class PurchaseOrder(models.Model):
     def create(self, vals_list):
         for vals in vals_list:
             vals['name'] = self.env['ir.sequence'].next_by_code('purchase.order') or _("New")
+            # 采购员user_id = 供应商的采购员
+            if vals.get('supplier_id'):
+                supplier = self.env['res.supplier'].browse(vals.get('supplier_id'))
+                vals['user_id'] = supplier.user_id.id
         return super(PurchaseOrder, self).create(vals_list)
 
     # 客户交期
