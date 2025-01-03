@@ -322,9 +322,8 @@ class MrpBomLine(models.Model):
                     <li>时间：{}</li>
                     <li>产品：{}</li>
                     <li>数量：{}</li>
-                    <li>单价：{}</li>
                 </ul>
-                """.format(str(fields.Datetime.now()), res.product_id.name, res.product_qty, res.price)
+                """.format(str(fields.Datetime.now()), res.product_id.name, res.product_qty)
         res.bom_id.message_post(body=Markup(body))
         return res
 
@@ -337,9 +336,8 @@ class MrpBomLine(models.Model):
                         <li>时间：{}</li>
                         <li>产品：{}</li>
                         <li>数量：{}</li>
-                        <li>单价：{}</li>
                     </ul>
-                    """.format(str(fields.Datetime.now()), line.product_id.name, line.product_qty, line.price)
+                    """.format(str(fields.Datetime.now()), line.product_id.name, line.product_qty)
             line.bom_id.message_post(body=Markup(body))
         return super(MrpBomLine, self).unlink()
 
